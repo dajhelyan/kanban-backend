@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TaskModule } from './task/task.module';
 import { TaskService } from './task/task.service';
+import { TaskController } from './task/task.controller';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -12,8 +14,9 @@ import { TaskService } from './task/task.service';
       isGlobal: true
     }),
     TaskModule,
+    PrismaModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, TaskController],
   providers: [AppService, TaskService],
 })
 export class AppModule {}
