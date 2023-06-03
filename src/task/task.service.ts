@@ -34,4 +34,10 @@ export class TaskService {
       where,
     })
   }
+
+  async deleteTask(where: Prisma.TaskWhereUniqueInput): Promise<Task> {
+    return await this.prismaService.task.delete({
+      where,
+    })
+  }
 }
