@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native"]
 }
 
 datasource db {
@@ -20,7 +21,7 @@ model Task {
 }
 
 enum Status {
-  ADMIN
-  PROJECT_OWNER
-  USER
+  NOT_STARTED
+  IN_PROGRESS
+  DONE
 }
