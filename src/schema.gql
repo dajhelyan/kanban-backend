@@ -1,0 +1,20 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Task {
+  id: ID!
+  title: String!
+  description: String
+  status: Status!
+}
+
+enum Status {
+  NOT_STARTED
+  IN_PROGRESS
+  DONE
+}
+
+type Query {
+  getTasks: [Task!]!
+}
