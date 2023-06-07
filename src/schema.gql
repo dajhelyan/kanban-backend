@@ -17,4 +17,27 @@ enum Status {
 
 type Query {
   getTasks: [Task!]!
+  getTaskById(id: TaskId!): Task!
+}
+
+input TaskId {
+  id: ID!
+}
+
+type Mutation {
+  createTask(taskInput: CreateTaskInput!): Task!
+  UpdateTask(updateTaskInput: UpdateTaskInput!): Task!
+}
+
+input CreateTaskInput {
+  title: String!
+  description: String!
+  status: Status!
+}
+
+input UpdateTaskInput {
+  id: ID!
+  title: String!
+  description: String!
+  status: Status!
 }

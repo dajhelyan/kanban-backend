@@ -9,6 +9,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { TaskResolver } from './task/task.resolver';
 
 @Module({
   imports: [
@@ -24,6 +25,6 @@ import { join } from 'path';
     PrismaModule
   ],
   controllers: [AppController, TaskController],
-  providers: [AppService, TaskService],
+  providers: [AppService, TaskService, TaskResolver],
 })
 export class AppModule {}

@@ -1,1 +1,2 @@
-export * from './create-task.dto'
+export * from './create-task.input'
+export * from './update-task.input'
