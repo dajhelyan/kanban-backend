@@ -4,12 +4,17 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TaskModule } from './task/task.module';
 import { TaskService } from './task/task.service';
-import { TaskController } from './task/task.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { TaskResolver } from './task/task.resolver';
+import { UserService } from './user/user.service';
+import { UserResolver } from './user/user.resolver';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
+import { AuthResolver } from './auth/auth.resolver';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -22,9 +27,19 @@ import { TaskResolver } from './task/task.resolver';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     TaskModule,
-    PrismaModule
+    PrismaModule,
+    AuthModule,
+    UserModule
   ],
-  controllers: [AppController, TaskController],
-  providers: [AppService, TaskService, TaskResolver],
+  controllers: [AppController],
+  providers: [
+    AppService,
+    TaskService,
+    TaskResolver,
+    UserService,
+    UserResolver,
+    AuthService,
+    AuthResolver
+  ],
 })
 export class AppModule {}

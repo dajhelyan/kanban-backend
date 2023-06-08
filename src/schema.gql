@@ -15,6 +15,14 @@ enum Status {
   DONE
 }
 
+type User {
+  id: ID!
+  name: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
 type Query {
   getTasks: [Task!]!
   getTaskById(id: TaskId!): Task!
@@ -25,14 +33,8 @@ input TaskId {
 }
 
 type Mutation {
-  createTask(taskInput: CreateTaskInput!): Task!
   UpdateTask(updateTaskInput: UpdateTaskInput!): Task!
-}
-
-input CreateTaskInput {
-  title: String!
-  description: String!
-  status: Status!
+  signUp(singUpInput: SingUpInput!): User!
 }
 
 input UpdateTaskInput {
@@ -40,4 +42,11 @@ input UpdateTaskInput {
   title: String!
   description: String!
   status: Status!
+}
+
+input SingUpInput {
+  name: String!
+  lastName: String!
+  email: String!
+  passsword: String!
 }
