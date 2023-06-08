@@ -12,12 +12,18 @@ datasource db {
 }
 
 model Task {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   title       String
   description String?
   status      Status
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("tasks")
 }
 
 enum Status {
@@ -27,11 +33,15 @@ enum Status {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  name        String
-  lastName    String
-  email       String
-  password    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(uuid())
+  name      String
+  lastName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Tasks Task[]
+
+  @@map("users")
 }
