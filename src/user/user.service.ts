@@ -15,4 +15,12 @@ export class UserService {
     })
   }
 
+  async findUserByEmail(email: Prisma.UserWhereUniqueInput): Promise<User> {
+    return await this.prismaService.user.findUnique({
+      where: {
+        email: email.email
+      }
+    })
+  }
+
 }
