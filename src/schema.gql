@@ -35,13 +35,14 @@ input TaskId {
 type Mutation {
   UpdateTask(updateTaskInput: UpdateTaskInput!): Task!
   signUp(singUpInput: SingUpInput!): User!
+  signIn(signInInput: SignInInput!): User!
 }
 
 input UpdateTaskInput {
+  title: String
+  description: String
+  status: Status
   id: ID!
-  title: String!
-  description: String!
-  status: Status!
 }
 
 input SingUpInput {
@@ -49,4 +50,9 @@ input SingUpInput {
   lastName: String!
   email: String!
   passsword: String!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
 }

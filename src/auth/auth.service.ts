@@ -1,6 +1,6 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { SingUpInput } from './dto/sign-up.input';
-import { UpdateAuthInput } from './dto/update-auth.input';
+import { SignInInput } from './dto/sign-in.input';
 import * as argon from 'argon2'
 import { UserService } from 'src/user/user.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
@@ -39,19 +39,20 @@ export class AuthService {
 
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  async signIn(signInInput: SignInInput): Promise<any> {
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    try { 
+      const user = await this.userService.findUserByEmail(signInInput)
 
-  update(id: number, updateAuthInput: UpdateAuthInput) {
-    return `This action updates a #${id} auth`;
-  }
+      const verifyPassword = argon.verify(
+        user.password,
+        signInInput.password
+      )
+        console.log(verifyPassword)
+      if (verifyPassword) return user;
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    } catch(error) {
+      throw new ForbiddenException("Wrong credentials.")     
+    }
   }
 }
