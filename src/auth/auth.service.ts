@@ -5,12 +5,18 @@ import * as argon from 'argon2'
 import { UserService } from 'src/user/user.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { User } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt'
+import { ConfigService } from '@nestjs/config';
+import { Token } from './entities/token.entity';
+
 
 @Injectable()
 export class AuthService {
   
   constructor(
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
   ) {}
 
   async signUp(singUpInput: SingUpInput): Promise<User> {
@@ -39,7 +45,7 @@ export class AuthService {
 
   }
 
-  async signIn(signInInput: SignInInput): Promise<any> {
+  async signIn(signInInput: SignInInput): Promise<Token> {
 
     try { 
       const user = await this.userService.findUserByEmail(signInInput)
@@ -48,10 +54,23 @@ export class AuthService {
         user.password,
         signInInput.password
       )
-        console.log(verifyPassword)
-      if (verifyPassword) return user;
+
+      if (verifyPassword) {
+
+        const payload = {
+          subject: user.id,
+          email: user.email
+        }
+
+        // jwt token generated
+        const token =  {
+          access_Token: await this.jwtService.sign(payload)
+        }
+        return token;
+      };
 
     } catch(error) {
+      console.log(error)
       throw new ForbiddenException("Wrong credentials.")     
     }
   }
