@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthService } from './auth/auth.service';
 import { AuthResolver } from './auth/auth.resolver';
 import { UserModule } from './user/user.module';
+import {JwtModule, JwtService} from '@nestjs/jwt'
 
 @Module({
   imports: [
@@ -28,8 +29,9 @@ import { UserModule } from './user/user.module';
     }),
     TaskModule,
     PrismaModule,
+    UserModule,
+    JwtModule,
     AuthModule,
-    UserModule
   ],
   controllers: [AppController],
   providers: [
@@ -39,7 +41,8 @@ import { UserModule } from './user/user.module';
     UserService,
     UserResolver,
     AuthService,
-    AuthResolver
+    AuthResolver, 
+    JwtService
   ],
 })
 export class AppModule {}
