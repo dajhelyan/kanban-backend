@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { SingUpInput } from './dto/sign-up.input';
 import { SignInInput } from './dto/sign-in.input';
 import { User } from 'src/user/model/user.model';
+import { type } from 'os';
+import { Token } from './entities/token.entity';
 
 @Resolver()
 export class AuthResolver {
@@ -13,8 +15,8 @@ export class AuthResolver {
     return this.authService.signUp(singUpInput);
   }
 
-  @Mutation(() => User)
-  signIn(@Args('signInInput') signInInput: SignInInput): Promise<User> {
+  @Mutation(() => Token)
+  signIn(@Args('signInInput') signInInput: SignInInput): Promise<Token> {
     return this.authService.signIn(signInInput)
   }
 

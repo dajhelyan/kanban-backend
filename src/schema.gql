@@ -23,6 +23,10 @@ type User {
   password: String!
 }
 
+type Token {
+  access_Token: String!
+}
+
 type Query {
   getTasks: [Task!]!
   getTaskById(id: TaskId!): Task!
@@ -35,7 +39,7 @@ input TaskId {
 type Mutation {
   UpdateTask(updateTaskInput: UpdateTaskInput!): Task!
   signUp(singUpInput: SingUpInput!): User!
-  signIn(signInInput: SignInInput!): User!
+  signIn(signInInput: SignInInput!): Token!
 }
 
 input UpdateTaskInput {
