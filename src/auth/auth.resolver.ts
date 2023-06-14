@@ -15,7 +15,7 @@ export class AuthResolver {
     return this.authService.signUp(singUpInput);
   }
 
-  @Mutation(() => Token)
+  @Query(() => Token)
   signIn(@Args('signInInput') signInInput: SignInInput): Promise<Token> {
     return this.authService.signIn(signInInput)
   }

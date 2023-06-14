@@ -64,8 +64,9 @@ export class AuthService {
 
         // jwt token generated
         const token =  {
-          access_Token: await this.jwtService.sign(payload)
+          access_token: await this.jwtService.sign(payload)
         }
+        
         return token;
       };
 
