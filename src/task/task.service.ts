@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-// import { CreateTaskDto } from './dto';
-import { randomUUID } from 'crypto';
 import { Prisma, Task } from '@prisma/client';
 
 @Injectable()
@@ -20,13 +18,9 @@ export class TaskService {
     })
   }
 
-  async addTask(data: Prisma.TaskCreateInput): Promise<Task> {
+  async addTask(data: Prisma.TaskUncheckedCreateInput): Promise<Task> {
     return await this.prismaService.task.create({
-      data: {
-        title: data.title,
-        description: data.description,
-        status: data.status
-      }
+      data
     })
   }
 

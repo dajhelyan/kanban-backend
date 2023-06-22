@@ -3,6 +3,10 @@ import { TaskService } from "./task.service";
 import { Task } from "./models/task.model";
 import { CreateTaskInput, UpdateTaskInput } from "./dto";
 import { TaskId } from "./dto/task-id.input";
+import { JwtAuthGuard } from "src/auth/strategy/jwt-auth.guard";
+import { UseGuards } from "@nestjs/common";
+import { CurrentUser } from "src/auth/strategy/current-user.decorator";
+import { User } from "src/user/model/user.model";
 
 @Resolver()
 export class TaskResolver {
@@ -10,6 +14,8 @@ export class TaskResolver {
     private readonly taskService: TaskService
   ) {}
 
+
+  @UseGuards(JwtAuthGuard)
   @Query(() => [Task])
   async getTasks(): Promise<Task[]> {
     return await this.taskService.getAllTasks()
@@ -22,11 +28,19 @@ export class TaskResolver {
     return await this.taskService.findOneTask(id)
   }
 
-  @Mutation(() => Task)
+  @UseGuards(JwtAuthGuard)
+  @Query(() => Task)
   async createTask(
-    @Args('taskInput') taskInput: CreateTaskInput
+    @Args('taskInput') taskInput: CreateTaskInput,
+    @CurrentUser('subject') subject: string,
   ):Promise<Task> {
-    return await this.taskService.addTask(taskInput)
+    // console.log(subject)
+    return await this.taskService.addTask({
+      title: taskInput.title, 
+      description: taskInput.description, 
+      status: taskInput.status, 
+      userId: subject
+    })
   }
 
   @Mutation(() => Task)

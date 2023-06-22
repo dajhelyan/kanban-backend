@@ -16,6 +16,10 @@ export class CreateTaskInput {
 
   @Field(() => Status)
   status: Status
+  
+  @IsNotEmpty()
+  @Field({nullable: false})
+  userId: string
 }
 
 registerEnumType(Status, {

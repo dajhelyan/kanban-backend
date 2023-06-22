@@ -7,6 +7,7 @@ type Task {
   title: String!
   description: String
   status: Status!
+  userId: String!
 }
 
 enum Status {
@@ -24,28 +25,42 @@ type User {
 }
 
 type Token {
-  access_Token: String!
+  access_token: String!
 }
 
 type Query {
   getTasks: [Task!]!
   getTaskById(id: TaskId!): Task!
+  createTask(taskInput: CreateTaskInput!): Task!
+  signIn(signInInput: SignInInput!): Token!
 }
 
 input TaskId {
   id: ID!
 }
 
+input CreateTaskInput {
+  title: String!
+  description: String!
+  status: Status!
+  userId: String!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   UpdateTask(updateTaskInput: UpdateTaskInput!): Task!
   signUp(singUpInput: SingUpInput!): User!
-  signIn(signInInput: SignInInput!): Token!
 }
 
 input UpdateTaskInput {
   title: String
   description: String
   status: Status
+  userId: String
   id: ID!
 }
 
@@ -54,9 +69,4 @@ input SingUpInput {
   lastName: String!
   email: String!
   passsword: String!
-}
-
-input SignInInput {
-  email: String!
-  password: String!
 }

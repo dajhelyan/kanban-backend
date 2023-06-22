@@ -14,6 +14,9 @@ export class Task {
 
   @Field(() => Status)
   status: Status
+
+  @Field({ nullable: false })
+  userId: string
 }
 
 registerEnumType(Status, {
